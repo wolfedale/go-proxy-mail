@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>mailProxy dashboard</title>
+
+    <meta name="description" content="Source code generated using layoutit.com">
+    <meta name="author" content="LayoutIt!">
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+
+  </head>
+  <body>
+
+    <div class="container-fluid">
+	<div class="row">
+		<div class="col-md-12">
+			<ul class="nav nav-tabs">
+				<li class="active">
+					<a href="#">Home</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<table class="table">
+				<thead>
+					<tr>
+						<th>
+							Id
+						</th>
+						<th>
+                            Sender
+						</th>
+						<th>
+                            SenderHeader
+						</th>
+						<th>
+                            Recipient
+						</th>
+                        <th>
+                            Date
+                        </th>
+                        <th>
+                            Blocked
+                        </th>
+                        <th>
+                            Queue
+                        </th>
+                        <th>
+                            PASS
+                        </th>
+					</tr>
+				</thead>
+				<tbody>
+                    {{ range . }}
+					<tr>
+						<td>
+                            {{ .Id }}
+						</td>
+						<td>
+                            {{ .Sender }}
+						</td>
+						<td>
+                            {{ .SenderHeader }}
+						</td>
+						<td>
+                            {{ .Recipient }}
+						</td>
+                        <td>
+                            {{ .Date }}
+                        </td>
+                        <td>
+                            {{ .Blocked }}
+                        </td>
+                        <td>
+                            <a href="queue/{{ .Queue }}">{{ .Queue }}</a>
+                        </td>
+                        <td>
+                            <button type="button" class="send-button" data-id="{{ .Id }}">Send</button>
+
+                        </td>
+					</tr>
+                    {{ end }}
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/scripts.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function () {
+$("body").on('click', '.send-button', function(e){
+e.preventDefault();
+var $this = $(this);
+$.get('/mails/delete/'+$this.data("id"), function(data){
+console.log(data);
+}, 'json');
+});
+});
+</script>
+
+  </body>
+</html>
